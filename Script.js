@@ -57,6 +57,7 @@ var suelo;
 var gameOver;
 
 function Start() {
+    boton = document.querySelector(".boton");
     gameOver = document.querySelector(".game-over");
     suelo = document.querySelector(".suelo");
     contenedor = document.querySelector(".contenedor");
@@ -208,12 +209,14 @@ function GanarPuntos() {
 function GameOver() {
     Estrellarse();
     gameOver.style.display = "block";
+    boton.style.display = "block";
+
 }
 
 function DetectarColision() {
     for (var i = 0; i < obstaculos.length; i++) {
         if (obstaculos[i].posX > dinoPosX + dino.clientWidth) {
-            break; 
+            break;
         } else {
             if (IsCollision(dino, obstaculos[i], 10, 30, 15, 20)) {
                 GameOver();
@@ -232,4 +235,36 @@ function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft)
         ((aRect.left + aRect.width - paddingRight) < bRect.left) ||
         (aRect.left + paddingLeft > (bRect.left + bRect.width))
     );
+}
+// function actualizar() { location.reload(); }
+function actualizar() {
+    score = 0;
+    textoScore.innerText = score;
+    sueloX = 0;
+    gameVel = 1;
+    parado = false;
+    for (var i = obstaculos.length - 1; i >= 0; i--) {
+        obstaculos[i].parentNode.removeChild(obstaculos[i]);
+
+    }
+    for (var i = nubes.length - 1; i >= 0; i--) {
+        nubes[i].parentNode.removeChild(nubes[i]);
+
+    }
+    // for (var i = contenedor.length - 1; i >= 0; i--) {
+    //     contenedor[i].parentNode.removeChild(contenedor[i]);
+
+    // }
+    // contenedor =[];
+    nubes = [];
+    obstaculos = [];
+    dino.classList.remove("dino-estrellado");
+    dino.classList.add("dino-corriendo");
+    contenedor.classList.remove("mediodia");
+    contenedor.classList.remove("tarde");
+    contenedor.classList.remove("noche");
+    gameOver.style.display = "none";
+    boton.style.display = "none";
+
+
 }
